@@ -9,9 +9,8 @@ import {
     AddMessageActionType,
     AddPostActionType,
     ChangeNewTextActionType,
-    RootStateType, SendMessageActionType,
-    StoreType
-} from "./redux/state";
+    RootStateType, SendMessageActionType
+} from "./redux/store";
 
  export type AppPropsType = {
     state: RootStateType,

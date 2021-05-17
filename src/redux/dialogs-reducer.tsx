@@ -1,4 +1,6 @@
-import {AddMessageActionType, DialogPageType, SendMessageActionType} from "./state";
+import {AddMessageActionType, DialogPageType, SendMessageActionType} from "./store";
+
+type ActionsType = SendMessageActionType | AddMessageActionType
 
 const initialState = {
     dialogs: [
@@ -29,17 +31,6 @@ const dialogsReducer = (state:DialogPageType = initialState,action:ActionsType) 
             return state;
         default: return state;
     }
-    // if (action.type === 'UPDATE-NEW-MESSAGE-BODY') {
-    //     state.newMessageBody = action.body;
-    //
-    // }
-    // else if (action.type ==="SEND-MESSAGE") {
-    //     let body = state.newMessageBody;
-    //     state.newMessageBody="";
-    //     state.messages.push({id: 6, message :body});
-    //
-    // }
-    // return state
 }
 export const sendMessageCreator =(messageText:string):SendMessageActionType => {
     return {
@@ -52,5 +43,5 @@ export const updateNewMessageBodyCreator = (body:string):AddMessageActionType =>
     return { type: "UPDATE-NEW-MESSAGE-BODY", body: body}
 }
 
-type ActionsType = SendMessageActionType | AddMessageActionType
+
 export default dialogsReducer;

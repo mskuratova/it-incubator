@@ -1,5 +1,6 @@
 import profileReducer from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
+import sidebarReducer from "./sidebar-reducer";
 
 export type MessageType = {
     id: number
@@ -96,12 +97,13 @@ let store:StoreType = {
 
     },
     subscribe(observer: () => void) {
-        this._collSubscriber=observer;
+        this._collSubscriber = observer;
 },
     dispatch(action: any) {
 
         this._state.profilePage = profileReducer(this._state.profilePage, action);
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action);
 
         this._collSubscriber(this._state);
     }

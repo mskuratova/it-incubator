@@ -8,7 +8,7 @@ import {
     ChangeNewTextActionType,
     ProfilePageType,
     SendMessageActionType
-} from "../../redux/state";
+} from "../../redux/store";
 
 type ProfileType = {
     profilePage: ProfilePageType,

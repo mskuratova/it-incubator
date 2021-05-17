@@ -2,7 +2,7 @@ import React, {ChangeEvent} from 'react';
 import classes from './MyPosts.module.css';
 import Post from './Post/Post';
 import {AddPostActionType, ChangeNewTextActionType, PostType
-} from '../../../redux/state';
+} from '../../../redux/store';
 import { addPostActionCreator, updateNewPostTextActionCreator } from '../../../redux/profile-reducer';
 
 type MessageType = {

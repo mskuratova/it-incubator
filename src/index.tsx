@@ -1,10 +1,9 @@
-import store, {RootStateType, StoreType} from './redux/state'
+import {RootStateType} from './redux/store'
+import store from "./redux/redux-store"
 import ReactDOM from "react-dom";
 import {BrowserRouter} from "react-router-dom";
 import App from "./App";
 import React from "react";
-
-
 
 let rerenderEntireTree = (state: RootStateType) => {
     console.log(state)
@@ -16,7 +15,9 @@ let rerenderEntireTree = (state: RootStateType) => {
 
 rerenderEntireTree(store.getState());
 
+store.subscribe(() => {
+    let state = store.getState();
+    rerenderEntireTree(state);
+})
 
-
-// @ts-ignore
-store.subscribe(rerenderEntireTree)
+// store.subscribe(rerenderEntireTree)
