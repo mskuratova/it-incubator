@@ -17,7 +17,6 @@ export type PostType = {
 export type ProfilePageType = {
     posts: Array<PostType>
     newPostText: string
-    // updateNewPostText: (text: string)=> void;
 }
 export type DialogPageType = {
     dialogs: Array<DialogType>
@@ -105,56 +104,7 @@ let store:StoreType = {
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
 
         this._collSubscriber(this._state);
-        // if (action.type ==='ADD-POST') {
-            //
-            // let newPost: PostType = {
-            //     id: 5,
-            //     message: action.newPostText,
-            //     likesCount: 0
-            // };
-            // this._state.profilePage.posts.push(newPost);
-        //     this._state.profilePage.newPostText ='';
-        //     this._collSubscriber(this._state);
-        // }
-        // else if (action.type === 'UPDATE-NEW-POST-TEXT') {
-        //
-        //     this._state.profilePage.newPostText = action.newText;
-        //     this._collSubscriber(this._state);
-        // }
-        // else if (action.type === 'UPDATE-NEW-MESSAGE-BODY') {
-        //     this._state.dialogsPage.newMessageBody = action.body;
-        //     this._collSubscriber(this._state);
-        // }
-        // else if (action.type ==="SEND-MESSAGE") {
-        //     let body = this._state.dialogsPage.newMessageBody;
-        //     this._state.dialogsPage.newMessageBody="";
-        //     this._state.dialogsPage.messages.push({id: 6, message :body});
-        //     this._collSubscriber(this._state);
-        //
-        // }
     }
-}
-
-
-const addPostActionCreator =(postText:string):AddPostActionType => {
-    return {
-        type: "ADD-POST",
-        newPostText:postText
-    }
-}
-
-const updateNewPostTextActionCreator = (text:string):ChangeNewTextActionType => {
-    return { type: "UPDATE-NEW-POST-TEXT", newText: text}
-}
-const sendMessageCreator =(messageText:string):SendMessageActionType => {
-    return {
-        type: "SEND-MESSAGE",
-        newText:messageText
-    }
-}
-
-const updateNewMessageBodyCreator = (body:string):AddMessageActionType => {
-    return { type: "UPDATE-NEW-MESSAGE-BODY", body: body}
 }
 
 export default store;
