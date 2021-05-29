@@ -16,6 +16,7 @@ export type PostType = {
     likesCount: number
 }
 export type ProfilePageType = {
+    store?:StoreType;
     posts: Array<PostType>
     newPostText: string
 }
@@ -45,7 +46,6 @@ export type StoreType = {
 
 export type AddPostActionType = {
     type: "ADD-POST"
-    newPostText: string
 }
  export type ChangeNewTextActionType = {
     type: "UPDATE-NEW-POST-TEXT"
@@ -60,7 +60,14 @@ export type SendMessageActionType = {
     type: "SEND-MESSAGE"
     newText: string
 }
-
+export type FollowActionType = {
+    type: "FOLLOW"
+    userID: number
+}
+export type UnfollowActionType = {
+    type: "UNFOLLOW"
+    userID: number
+}
 
 let store:StoreType = {
     _state: {

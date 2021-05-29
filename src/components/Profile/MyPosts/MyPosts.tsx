@@ -3,7 +3,6 @@ import classes from './MyPosts.module.css';
 import Post from './Post/Post';
 import {AddPostActionType, ChangeNewTextActionType, PostType
 } from '../../../redux/store';
-import { addPostActionCreator, updateNewPostTextActionCreator } from '../../../redux/profile-reducer';
 
 type MessageType = {
     posts: PostType[]
@@ -11,27 +10,24 @@ type MessageType = {
     dispatch: (action: { type: string; newTex: string }) => void
 }
 type ProfilePageType = {
-    posts: Array<PostType>
-    newPostText: string
-    dispatch:(action:AddPostActionType | ChangeNewTextActionType) => void
+    posts : Array<PostType>
+    newPostText ?: string
+    addPosts: () => void
+    updateNewPostsText:(newText:string) => void
+    // dispatch ?:(action:AddPostActionType | ChangeNewTextActionType) => void
 }
 
-
-
-
-    const MyPosts: React.FC<ProfilePageType> = ({posts, newPostText, dispatch}) => {
+    const MyPosts: React.FC<ProfilePageType> = ({posts, newPostText, addPosts, updateNewPostsText}) => {
 
     let postsElements = posts.map((p) => <Post likesCount={p.likesCount} message={p.message} id={p.id}/>);
-    // let newPostElement = React.createRef<HTMLTextAreaElement>()
 
-
-    let addPostHandler:() => void = () => {
-        dispatch(addPostActionCreator(newPostText));
+    let onAddPost:() => void = () => {
+       addPosts();
     }
 
     let onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let text = e.currentTarget.value;
-        dispatch(updateNewPostTextActionCreator(text));
+        updateNewPostsText(text)
     }
 
     return (
@@ -44,7 +40,7 @@ type ProfilePageType = {
                     <textarea onChange={onPostChange} value={newPostText}/>
                     {/*ref={newPostElement}*/}
                 </div>
-                <button onClick={addPostHandler}>Add post</button>
+                <button onClick={onAddPost}>Add post</button>
             </div>
             <div className={classes.posts}>
                 {postsElements}

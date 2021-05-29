@@ -1,4 +1,6 @@
-import {AddPostActionType, ChangeNewTextActionType, PostType, ProfilePageType} from "./store";
+import {AddPostActionType, ChangeNewTextActionType, PostType, ProfilePageType, SendMessageActionType} from "./store";
+
+type ActionsType = ChangeNewTextActionType |AddPostActionType
 
 let initialState = {
     posts: [
@@ -7,43 +9,52 @@ let initialState = {
         newPostText: "it-kamasutra"
 
 };
+export type InitialSateType = typeof initialState;
 
-const profileReducer = (state:ProfilePageType = initialState, action:any) => {
-    // switch (action.type) {
-    //     case 'ADD-POST' :
-    //         let newPost: PostType = {
-    //             id: 5,
-    //             message: action.newPostText,
-    //             likesCount: 0
-    //         };
-    //         state.posts.push(newPost);
-    //         state.newPostText = '';
-    //         return state;
-    //     case 'UPDATE-NEW-POST-TEXT' :
-    //         state.newPostText = action.newText;
-    //         return state;
+const profileReducer = (state:ProfilePageType = initialState, action:ActionsType):InitialSateType => {
+    switch (action.type) {
+        case 'ADD-POST' :{
+            let newPost: PostType = {
+                id: 5,
+                message: state.newPostText,
+                likesCount: 0
+            };
+        return  {
+                ...state,
+                posts: [...state.posts, newPost]
+            }}
+            // state.posts.push(newPost);
+            // state.newPostText = '';
+        case 'UPDATE-NEW-POST-TEXT' :{
+            return {
+                ...state,
+                newPostText: action.newText
+            }}
+     default: return state;}}
+
+    // if (action.type ==='ADD-POST') {
     //
-    // } default: return state;}
-    if (action.type ==='ADD-POST') {
+    //     let newPost: PostType = {
+    //         id: 5,
+    //         message: action.newPostText,
+    //         likesCount: 0
+    //     };
+    //     let stateCopy = {...state}
+    //     stateCopy.posts=[...state.posts]
+    //     stateCopy.posts.push(newPost);
+    //     stateCopy.newPostText ='';
+    //     return stateCopy;
+    // }
+    // else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+    //     let stateCopy = {...state}
+    //     stateCopy.newPostText = action.newText;
+    //     return stateCopy
+    // }
+    // return state
 
-        let newPost: PostType = {
-            id: 5,
-            message: action.newPostText,
-            likesCount: 0
-        };
-        state.posts.push(newPost);
-        state.newPostText ='';
-    }
-    else if (action.type === 'UPDATE-NEW-POST-TEXT') {
-
-        state.newPostText = action.newText;
-    }
-    return state
-}
-export const addPostActionCreator =(postText:string):AddPostActionType => {
+export const addPostActionCreator =():AddPostActionType => {
     return {
-        type: "ADD-POST",
-        newPostText:postText
+        type: "ADD-POST"
     }
 }
 

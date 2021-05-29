@@ -25,22 +25,22 @@ const Messages = (props:MessagePropsType) => {
     return <div className={classes.dialogs}>{props.message}</div>
 }
 
-const Dialogs = (props:DialogPropsType) => {
+const Dialogs = (props:any) => {
 
 
-    let dialogsElements = props.dialogsPage.dialogs.map( (d:DialogType) => <DialogsItems name={d.name} id={d.id} />);
+    let dialogsElements = props.dialogsPage.dialogs.map( (d:DialogType) => <DialogsItems name={d.name} key={d.id} id={d.id} />);
 
-    let messageElements = props.dialogsPage.messages.map( (m:MessageType) => <Messages id={m.id} message={m.message} />);
+    let messageElements = props.dialogsPage.messages.map( (m:MessageType) => <Messages id={m.id} key={m.id} message={m.message} />);
 
     let newMessageBody = props.dialogsPage.newMessageBody;
 
     let onSendMessageClick = () => {
-        props.dispatch(sendMessageCreator(""))
+        props.sendMessage();
     }
 
     let onNewMessageChange =(e:ChangeEvent<HTMLTextAreaElement>) => {
         let body = e.currentTarget.value;
-        props.dispatch(updateNewMessageBodyCreator(body))
+        props.updateNewMessageBody(body);
     }
     // let newDialogsElementn:any = React.createRef();
     // let addDialogs = () => {

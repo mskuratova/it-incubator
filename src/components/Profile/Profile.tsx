@@ -1,14 +1,14 @@
 import React from 'react';
 import classes from './Profile.module.css';
-import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {
     AddMessageActionType,
     AddPostActionType,
     ChangeNewTextActionType,
-    ProfilePageType,
-    SendMessageActionType
+    ProfilePageType, RootStateType,
+    SendMessageActionType, StoreType
 } from "../../redux/store";
+import MyPostsContainer from "./MyPosts/Post/MyPostsContainer";
 
 type ProfileType = {
     profilePage: ProfilePageType,
@@ -19,18 +19,18 @@ type ProfileType = {
 
 }
 
-const Profile = (props: ProfileType) => {
+const Profile = () => {
     //let myPostsElements = props.profilePage.posts.map((p) => <MyPosts posts={p.message}/>);
-    // @ts-ignore
+
     return (
 
         <div className={classes.content}>
             <ProfileInfo/>
 
-            <MyPosts posts={props.profilePage.posts}
-                     newPostText= {props.profilePage.newPostText}
-                     dispatch={props.dispatch}/>
-        </div>
+            <MyPostsContainer/>
+                                    </div>
     )
 };
 export default Profile;
+
+// posts = {props.profilePage.posts} newPostText ={props.profilePage.newPostText} dispatch = {props.dispatch}/>
