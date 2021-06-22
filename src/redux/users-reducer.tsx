@@ -5,9 +5,9 @@ import {
 
 export type UserType = {
     id: number
-    photoUrl: string
+    photos: string
     followed: boolean
-    fullName: string
+    name: string
     status: string
     location:{city: string, country: string}
 }
@@ -16,9 +16,9 @@ type ActionsType = FollowActionType |UnfollowActionType | SetUsersActionType
 
 let initialState = {
     users: [
-        {id: 1, photoUrl: "", followed: false, fullName: 'Dmitry', status: 'I am a boos', location: {city: 'Minsk', country: 'Belarus'}},
-        {id: 2,photoUrl: "", followed: true, fullName: 'Sasha', status: 'I am a boos too', location: {city: 'Moscow', country: 'Russia'}},
-        {id: 3, photoUrl: "", followed: false, fullName: 'Andrew', status: 'I am a boos too', location: {city: 'Kiev', country: 'Ukraine'}},
+        {id: 1, photos: "", followed: false, name: 'Dmitry', status: 'I am a boos', location: {city: 'Minsk', country: 'Belarus'}},
+        {id: 2,photos: "", followed: true, name: 'Sasha', status: 'I am a boos too', location: {city: 'Moscow', country: 'Russia'}},
+        {id: 3, photos: "", followed: false, name: 'Andrew', status: 'I am a boos too', location: {city: 'Kiev', country: 'Ukraine'}},
     ]
 };
 export type InitialSateType = typeof initialState;
