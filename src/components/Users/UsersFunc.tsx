@@ -2,6 +2,7 @@ import React from "react";
 import s from "./users.module.css";
 
  export let UsersFunc = (props: any) => {
+
      let pagesCount = Math.ceil(props.totalUserCount / props.pageSize)
      let pages = [];
      for (let i = 1; i <= pagesCount; i++) {

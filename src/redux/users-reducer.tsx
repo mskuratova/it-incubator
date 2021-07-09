@@ -12,7 +12,7 @@ export type UserType = {
     location:{city: string, country: string}
 }
 
-type ActionsType = FollowActionType |UnfollowActionType | SetUsersActionType |SetCurrentPageActionType| SetTotalUsersCountActionType
+type ActionsType = FollowActionType |UnfollowActionType | SetUsersActionType |SetCurrentPageActionType| SetTotalUsersCountActionType | ToggleIsFetchingActionType
 
 let initialState = {
     users: [
@@ -22,6 +22,7 @@ let initialState = {
     ], pageSize: 5,
     totalUsersCount:0,
     currentPage: 1,
+    isFetching: false
 };
 export type InitialSateType = typeof initialState;
 export type SetUsersActionType = {
@@ -35,6 +36,10 @@ export type SetCurrentPageActionType = {
 export type SetTotalUsersCountActionType = {
     type: "SET-TOTAL-USERS-COUNT"
    count: number
+}
+export type ToggleIsFetchingActionType = {
+    type: "TOGGLE-IS-FETCHING"
+    ifFetching: boolean
 }
 
 
@@ -66,12 +71,16 @@ const usersReducer = (state:InitialSateType = initialState, action:ActionsType):
             return {...state, currentPage: action.currentPage}
         case "SET-TOTAL-USERS-COUNT":
             return {...state, totalUsersCount: action.count}
-     default: return state;}
+        case "TOGGLE-IS-FETCHING": {
+            return {...state,isFetching: action.ifFetching}
+        }
+        default: return state;}
 }
-export const followAC =(userID:number):FollowActionType => ({ type: "FOLLOW", userID })
-export const unfollowAC = (userID:number):UnfollowActionType => ({type: "UNFOLLOW", userID})
-export const setUsersAC = (users:UserType) => ({type: "SET-USERS", users})
-export const setCurrentPageAC = (currentPage:number) => ({type: "SET-CURRENT-PAGE", currentPage})
-export const setUsersTotalCountAC = (totalUsersCount:number) => ({type: "SET-TOTAL-USERS-COUNT", count:totalUsersCount})
+export const follow =(userID:number):FollowActionType => ({ type: "FOLLOW", userID })
+export const unfollow = (userID:number):UnfollowActionType => ({type: "UNFOLLOW", userID})
+export const setUsers = (users:UserType) => ({type: "SET-USERS", users})
+export const setCurrentPage = (currentPage:number) => ({type: "SET-CURRENT-PAGE", currentPage})
+export const setTotalUsersCount = (totalUsersCount:number) => ({type: "SET-TOTAL-USERS-COUNT", count:totalUsersCount})
+export const toggleIsFetching = (isFetching:boolean) => ({type: "TOGGLE-IS-FETCHING", isFetching})
 
 export default usersReducer;

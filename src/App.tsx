@@ -12,8 +12,7 @@ import {
     RootStateType, SendMessageActionType, StoreType
 } from "./redux/store";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
-import Users from "./components/Users/Users";
-import UsersContainer from "./components/Users/UsersContainer";
+import UsersContainer from './components/Users/UsersContainer';
 
  export type AppPropsType = {
      store: StoreType;
@@ -31,7 +30,7 @@ const App = () => {
                            render={ () => <DialogsContainer/> }/>
                     <Route  path='/profile'
                             render={ () => <Profile />} />
-                    <Route path='/user'
+                    <Route path='/users'
                            render={ () => <UsersContainer /> } />
                 </div>
             </div>
