@@ -14,11 +14,13 @@ export type PostType = {
     id: number
     message: string
     likesCount: number
+    profile ?: any
 }
 export type ProfilePageType = {
     store?:StoreType;
     posts: Array<PostType>
     newPostText: string
+    profile ?: any
 }
 export type DialogPageType = {
     dialogs: Array<DialogType>
@@ -46,6 +48,16 @@ export type StoreType = {
 
 export type AddPostActionType = {
     type: "ADD-POST"
+}
+export type SetUserDataActionType = {
+    type: 'SET-USER-DATA'
+    data: {userId:number,
+    email:string,
+    login:string}
+}
+export type SetUserProfileActionType = {
+    type: "SET-USER-PROFILE"
+    profile:any
 }
  export type ChangeNewTextActionType = {
     type: "UPDATE-NEW-POST-TEXT"
@@ -75,7 +87,7 @@ let store:StoreType = {
         posts: [
             {id: 1, message: 'Hi, how are you?', likesCount: 12},
             {id: 2, message: 'My posts?', likesCount: 11}],
-        newPostText: "it-kamasutra"
+        newPostText: "it-kamasutra",
 
     },
     dialogsPage: {

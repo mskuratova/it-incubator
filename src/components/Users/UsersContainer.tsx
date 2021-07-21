@@ -8,7 +8,7 @@ import {
     toggleIsFetching,
     unfollow
 } from "../../redux/users-reducer";
-import axios from "axios";
+import  axios from "axios";
 import {UsersFunc} from "./UsersFunc";
 import preloader from "../../assets/images/loading-process-svgrepo-com.svg"
 import {Preloader} from "../common/Preloader/Preloader";
@@ -36,6 +36,11 @@ class UsersContainer extends React.Component<any, any> {
     }
 
     render() {
+        //  let pagesCount = this.props.totalUsersCount/ this.props.pageSise
+        // let pages =[]
+        // for (let i=1; i<= pagesCount; i++){
+        //     pages.push(i)
+        // }
 
         return <>
             {this.props.isFetching ? <Preloader isFetching={this.props.isFetching}/> : null}

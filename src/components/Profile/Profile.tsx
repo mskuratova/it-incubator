@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import classes from './Profile.module.css';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {
@@ -11,26 +11,26 @@ import {
 import MyPostsContainer from "./MyPosts/Post/MyPostsContainer";
 
 type ProfileType = {
-    profilePage: ProfilePageType,
-    addPosts?: (postMessage: string) => void
-    updateNewPostText?:(newText:string) => void
-    dispatch:(action:AddPostActionType |ChangeNewTextActionType|AddMessageActionType| SendMessageActionType) => void
-
+    // profilePage: ProfilePageType,
+    // addPosts?: (postMessage: string) => void
+    // updateNewPostText?: (newText: string) => void
+    // dispatch: (action: AddPostActionType | ChangeNewTextActionType | AddMessageActionType | SendMessageActionType) => void
+    profile: any
 
 }
 
-const Profile = () => {
-    //let myPostsElements = props.profilePage.posts.map((p) => <MyPosts posts={p.message}/>);
+class Profile extends React.Component<any> {
+    render() {
+        //let myPostsElements = props.profilePage.posts.map((p) => <MyPosts posts={p.message}/>);
+        return (
+            <div className={classes.content}>
+                <ProfileInfo profile={this.props.profile}/>
+                <MyPostsContainer/>
+            </div>
+        )
+    }
+}
 
-    return (
-
-        <div className={classes.content}>
-            <ProfileInfo/>
-
-            <MyPostsContainer/>
-                                    </div>
-    )
-};
 export default Profile;
 
 // posts = {props.profilePage.posts} newPostText ={props.profilePage.newPostText} dispatch = {props.dispatch}/>

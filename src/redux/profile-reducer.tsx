@@ -1,12 +1,20 @@
-import {AddPostActionType, ChangeNewTextActionType, PostType, ProfilePageType, SendMessageActionType} from "./store";
+import {
+    AddPostActionType,
+    ChangeNewTextActionType,
+    PostType,
+    ProfilePageType,
+    SendMessageActionType,
+    SetUserProfileActionType
+} from "./store";
 
-type ActionsType = ChangeNewTextActionType |AddPostActionType
+type ActionsType = ChangeNewTextActionType |AddPostActionType |SetUserProfileActionType
 
 let initialState = {
     posts: [
         {id: 1, message: 'Hi, how are you?', likesCount: 12},
         {id: 2, message: 'My posts?', likesCount: 11}],
-        newPostText: "it-kamasutra"
+        newPostText: "it-kamasutra",
+        profile : null
 
 };
 export type InitialSateType = typeof initialState;
@@ -20,17 +28,21 @@ const profileReducer = (state:ProfilePageType = initialState, action:ActionsType
                 likesCount: 0
             };
         return  {
-                ...state,
-                posts: [...state.posts, newPost]
-            }}
-            // state.posts.push(newPost);
-            // state.newPostText = '';
+            ...state,
+            posts: [...state.posts, newPost]
+        } as InitialSateType}
         case 'UPDATE-NEW-POST-TEXT' :{
             return {
                 ...state,
                 newPostText: action.newText
-            }}
-     default: return state;}}
+            }as InitialSateType}
+        case "SET-USER-PROFILE": {
+            return {
+                ...state, profile: action.profile
+            }
+        }
+
+        default: return state as InitialSateType;}}
 
     // if (action.type ==='ADD-POST') {
     //
@@ -54,12 +66,14 @@ const profileReducer = (state:ProfilePageType = initialState, action:ActionsType
 
 export const addPostActionCreator =():AddPostActionType => {
     return {
-        type: "ADD-POST"
-    }
+        type: "ADD-POST"}
 }
 
 export const updateNewPostTextActionCreator = (text:string):ChangeNewTextActionType => {
     return { type: "UPDATE-NEW-POST-TEXT", newText: text}
+}
+export const setUserProfile = (profile:any):SetUserProfileActionType => {
+    return { type: "SET-USER-PROFILE", profile}
 }
 
 export default profileReducer;

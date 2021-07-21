@@ -1,5 +1,7 @@
 import React from "react";
 import s from "./users.module.css";
+import * as axios from "axios";
+import userPhoto from "../../assets/images/loading-process-svgrepo-com.svg"
 
  export let UsersFunc = (props: any) => {
 
@@ -9,10 +11,10 @@ import s from "./users.module.css";
          pages.push(i)
      }
      return <div>
-         < div>
+         <div> 1 2 3 4 5</div>
+         <div>
              {pages.map(p => {
-                 return <span
-                     // className={props.currentPage === p && s.SelectedPage}
+                 return <span className={true && s.SelectedPage}
                      onClick={(e) => (props.onPageChanged(p))}>
             {p}</span>
              })
@@ -27,8 +29,9 @@ import s from "./users.module.css";
          }) => <div key={u.id}>
         <span>
             <div>
-                <img src={u.photos} className={s.userPhoto}/>
+                <img src={userPhoto} className={s.userPhoto}/>
             </div>
+            {/*u.photos.small != null ?u.photos.small : */}
         < div>
         {u.followed ? <button onClick={() => props.unfollow(u.id)}>
             Unfollow </button> : <button onClick={() => props.follow(u.id)}>Follow </button>}

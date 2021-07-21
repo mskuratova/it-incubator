@@ -21,7 +21,7 @@ let initialState = {
         {id: 3, photos: "", followed: false, name: 'Andrew', status: 'I am a boos too', location: {city: 'Kiev', country: 'Ukraine'}},
     ], pageSize: 5,
     totalUsersCount:0,
-    currentPage: 1,
+    currentPage: 2,
     isFetching: false
 };
 export type InitialSateType = typeof initialState;
