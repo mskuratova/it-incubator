@@ -9,9 +9,10 @@ import {
     RootStateType, SendMessageActionType, StoreType
 } from "./redux/store";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
-import UsersContainer from './components/Users/UsersContainer';
+import UsersContainer from './components/Users/delete/UsersContainer';
 import ProfileContainer from "./components/Profile/ProfileInfo/ProfileInfoContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import UsersAPIComponent from "./components/Users/UsersAPIComponent";
 
  export type AppPropsType = {
      store: StoreType;
@@ -30,7 +31,7 @@ const App = () => {
                     <Route  path='/profile/:userId?'
                             render={ () => <ProfileContainer />} />
                     <Route path='/users'
-                           render={ () => <UsersContainer /> } />
+                           render={ () => <UsersAPIComponent /> } />
                 </div>
             </div>
         </BrowserRouter>

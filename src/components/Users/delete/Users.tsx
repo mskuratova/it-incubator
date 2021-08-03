@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
-import userPhoto from "../../assets/images/loading-process-svgrepo-com.svg"
+import userPhoto from "../../../assets/images/loading-process-svgrepo-com.svg"
 
 let Users =(props:any) => {
     let getUsers = () => {
@@ -31,14 +31,16 @@ let Users =(props:any) => {
                     </NavLink>
                 </div>
                 <div>
-                    { u.followed ? <button onClick={() => props.unfollow(u.id)}>Unfollow</button> :<
-                        button onClick={() => props.follow(u.id)}>Follow</button> }
+                    { u.followed ?
+                        <button onClick={() => props.unfollow(u.id)}>Unfollow</button>
+                        :<button onClick={() => props.follow(u.id)}>Follow</button> }
 
                 </div>
             </span>
             <span>
                 <span>
-                    <div>{u.name}</div><div>{u.status}</div>
+                    <div>{u.name}</div>
+                    <div>{u.status}</div>
                 </span>
                 <span>
                     <div>{"u.location.country"}</div>
