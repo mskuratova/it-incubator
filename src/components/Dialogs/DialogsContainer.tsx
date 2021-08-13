@@ -5,12 +5,16 @@ import {
     AddPostActionType,
     ChangeNewTextActionType,
     DialogPageType,
-    DialogType,
-    MessageType, SendMessageActionType
+    SendMessageActionType
 } from "../../redux/store";
 import {sendMessageCreator, updateNewMessageBodyCreator } from '../../redux/dialogs-reducer';
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
+import {AppStateType} from "../../redux/redux-store";
+import {compose, Dispatch} from "redux";
+import {Redirect} from "react-router-dom";
+import ProfileInfoContainer from "../Profile/ProfileInfo/ProfileInfoContainer";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 type DialogPropsType = {
     dialogsPage: DialogPageType
@@ -48,12 +52,13 @@ type MessagePropsType = {
 //     )
 // }
 
-let mapStateToProps = (state:any) => {
+let mapStateToProps = (state:AppStateType) => {
     return {
-        dialogsPage: state.dialogsPage
+        dialogsPage: state.dialogsPage,
+        isAuth: state.auth.isAuth
     }
 }
-let mapDispatchToProps = (dispatch:any) => {
+let mapDispatchToProps = (dispatch:Dispatch) => {
     return {
         updateNewMessageBody: (body:string) => {
             dispatch(updateNewMessageBodyCreator(body));
@@ -63,7 +68,14 @@ let mapDispatchToProps = (dispatch:any) => {
         }
     }
 }
+// let AuthRedirectComponent =
+//     // withAuthRedirect(Dialogs)
+//     (props: any) => {
+//     if(!props.isAuth) return <Redirect to={"/login"}/>
+//     return <Dialogs {...props}/>
+// }
+export default compose (connect(mapStateToProps, mapDispatchToProps), withAuthRedirect) (Dialogs)
 
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
-
-export default DialogsContainer;
+// const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent);
+//
+// export default DialogsContainer;

@@ -13,6 +13,7 @@ import UsersContainer from './components/Users/delete/UsersContainer';
 import ProfileContainer from "./components/Profile/ProfileInfo/ProfileInfoContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import UsersAPIComponent from "./components/Users/UsersAPIComponent";
+import Login from "./components/Login/Login";
 
  export type AppPropsType = {
      store: StoreType;
@@ -32,6 +33,8 @@ const App = () => {
                             render={ () => <ProfileContainer />} />
                     <Route path='/users'
                            render={ () => <UsersAPIComponent /> } />
+                    <Route path='/login'
+                           render={ () => <Login /> } />
                 </div>
             </div>
         </BrowserRouter>

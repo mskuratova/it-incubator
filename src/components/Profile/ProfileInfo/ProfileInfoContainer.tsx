@@ -1,10 +1,12 @@
 import React from 'react';
-import {RouteComponentProps, withRouter} from "react-router-dom"
+import {Redirect, RouteComponentProps, withRouter} from "react-router-dom"
 import Profile from "../Profile";
-import axios from "axios";
 import {connect} from "react-redux";
-import {setUserProfile} from "../../../redux/profile-reducer";
 import {RootStateType} from "../../../redux/store";
+import {getUserProfile} from "../../../redux/profile-reducer";
+import ProfileInfoContainer from "./ProfileInfoContainer";
+import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 type PathParamsType = {
    userId: string
@@ -13,23 +15,20 @@ type PropsType = RouteComponentProps<PathParamsType>
 
 type MapStatePropsType ={
     profile: any
+    isAuth: boolean
 }
 type MapDispatchPropsType = {
-    setUserProfile: (profile:any) =>void
+    getUserProfile: (userId:number) =>void
 }
 type OwnPropsType = MapStatePropsType & MapDispatchPropsType
 
 class ProfileContainer extends React.Component<any, OwnPropsType> {
 
     componentDidMount() {
-        let userId = "8"
-            // this.props.match.params.userId;
-
-        if(!userId) {userId='2'}
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/`+userId)
-            .then(response => {
-                this.props.setUserProfile(response.data)
-            });
+        let userId = 3
+        // this.props.match.params.userId;
+        if(!userId) {userId=8}
+        this.props.getUserProfile(userId)
     }
 
     render() {
@@ -44,11 +43,21 @@ class ProfileContainer extends React.Component<any, OwnPropsType> {
     }
 }
 
-let mapStateToProps = (state:RootStateType):MapStatePropsType => ({
-    profile: state.profilePage.profile
+let mapStateToProps = (state:any):MapStatePropsType => ({
+    profile: state.profilePage.profile,
+    isAuth: state.auth.isAuth
 })
-// @ts-ignore
-let WithUrlDataContainerComponent = withRouter(ProfileContainer);
-export default connect<MapStatePropsType, MapDispatchPropsType, {} , RootStateType>(
-    mapStateToProps,{setUserProfile}
-)(ProfileContainer);
+
+export default compose(connect(mapStateToProps,{getUserProfile}), withRouter, withAuthRedirect)(ProfileContainer)
+// let AuthRedirectComponent =
+//     // withAuthRedirect(ProfileInfoContainer)
+//     (props: any) => {
+//     if(!props.isAuth) return <Redirect to={"/login"}/>
+//     return <ProfileInfoContainer {...props}/>
+// }
+
+
+// let WithUrlDataContainerComponent = withRouter(AuthRedirectComponent);
+// export default connect<MapStatePropsType, MapDispatchPropsType, {} , RootStateType>(
+//     mapStateToProps,{getUserProfile}
+// )(ProfileContainer);

@@ -6,6 +6,8 @@ import {
     SendMessageActionType, SetUserDataActionType,
     SetUserProfileActionType
 } from "./store";
+import {Dispatch} from "redux";
+import {authAPI} from "../api/api";
 
 type InitialSateType = {
     userId: string,
@@ -48,6 +50,15 @@ export const SetUserDataActionCreator = (userId: number, email: string, login: s
         data: {userId, email, login}
     }
 }
+export const getAuthUserData =() => (dispatch:Dispatch) => {
+    authAPI.me()
+        .then(response => {
+            if (response.data.resultCode === 0){
+                let {id, login, email} = response.data.data;
+               dispatch(SetUserDataActionCreator(id,email,login));
+            }
+        })
 
+}
 
 export default authReducer;

@@ -1,6 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import classes from './Dialogs.module.css';
 import DialogsItems from "./DialigItem/DialogsItem";
+import {Redirect} from "react-router-dom"
 import {
     AddMessageActionType,
     AddPostActionType,
@@ -9,7 +10,6 @@ import {
     DialogType,
     MessageType, SendMessageActionType
 } from "../../redux/store";
-import {sendMessageCreator, updateNewMessageBodyCreator } from '../../redux/dialogs-reducer';
 
 type DialogPropsType = {
     dialogsPage: DialogPageType
@@ -47,8 +47,7 @@ const Dialogs = (props:any) => {
     //     let text = newDialogsElementn.current.value;
     //     alert(text);
     // }
-
-
+    if(!props.isAuth) return <Redirect to={"/login"}/>
     return (
         <div className={classes.dialogs}>
             {/*<textarea ref={newDialogsElementn}></textarea>*/}

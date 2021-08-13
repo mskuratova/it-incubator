@@ -11,6 +11,8 @@ import {
 } from "../../redux/users-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {userAPI} from "../../api/api";
+import {compose} from "redux";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 
 class UsersAPIComponent extends React.Component<any, any> {
@@ -51,11 +53,18 @@ return {
     followingInProgress: state.usersPage.followingInProgress
 }
 }
-
-export default connect(mapStateToProps,
+export default compose (
+    connect(mapStateToProps,
     {
         follow, unfollow, setCurrentPage,
-        toggleIsFollowingProgress, getUsers:getUsersThunkCreator
-    })(UsersAPIComponent);
+        toggleIsFollowingProgress, getUsers:getUsersThunkCreator}),
+    withAuthRedirect)(UsersAPIComponent)
+
+
+// export default connect(mapStateToProps,
+//     {
+//         follow, unfollow, setCurrentPage,
+//         toggleIsFollowingProgress, getUsers:getUsersThunkCreator
+//     })(UsersAPIComponent);
 
 // export default UsersAPIComponent
