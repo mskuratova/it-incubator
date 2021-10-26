@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 
 const instance = axios.create({
     withCredentials: true,
@@ -20,12 +20,17 @@ export const userAPI = {
     unfollow(userId: React.Key | null | undefined) {
         return instance.delete(`follow/${userId}`)},
     getProfile(userId: number) {
-        return instance.get(`profile/`+userId)
+        return profileAPI.getProfile(userId)
 
     }
 }
-export const authAPI = {
 
+export const profileAPI = {
+    getProfile(userId: number): Promise<AxiosResponse<any>> {
+        return instance.get(`profile/`+userId);
+    }
+}
+export const authAPI = {
     me () {
         return instance.get(`auth/me`)
     }

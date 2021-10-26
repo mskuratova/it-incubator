@@ -4,7 +4,7 @@ import {
     AddMessageActionType,
     AddPostActionType,
     ChangeNewTextActionType,
-    DialogPageType,
+    DialogPageType, DialogType, MessageType,
     SendMessageActionType
 } from "../../redux/store";
 import {sendMessageCreator, updateNewMessageBodyCreator } from '../../redux/dialogs-reducer';
@@ -15,6 +15,8 @@ import {compose, Dispatch} from "redux";
 import {Redirect} from "react-router-dom";
 import ProfileInfoContainer from "../Profile/ProfileInfo/ProfileInfoContainer";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import DialogsItems from "./DialigItem/DialogsItem";
+
 
 type DialogPropsType = {
     dialogsPage: DialogPageType
@@ -26,31 +28,30 @@ type MessagePropsType = {
     id: number
 }
 
-// const Messages = (props:MessagePropsType) => {
-//     return <div className={classes.dialogs}>{props.message}</div>
-// }
-//
-// const DialogsContainer = (props:any) => {
-//
-//     //
-    // let dialogsElements = props.dialogsPage.dialogs.map( (d:DialogType) => <DialogsItems name={d.name} id={d.id} />);
-    //
-    // let messageElements = props.dialogsPage.messages.map( (m:MessageType) => <Messages id={m.id} message={m.message} />);
-    //
-    // let newMessageBody = props.dialogsPage.newMessageBody;
-    //
-    // let onSendMessageClick = () => {
-    //     props.dispatch(sendMessageCreator(""))
-    // }
-    //
-    // let onNewMessageChange =(body:any) => {
-    //     props.dispatch(updateNewMessageBodyCreator(body))
-    // }
+const Messages = (props:MessagePropsType) => {
+    return <div className={classes.dialogs}>{props.message}</div>
+}
 
-//     return (
-//       <Dialogs updateNewMessageBody={onNewMessageChange} sendMessage={onSendMessageClick} dialogsPage={props.store.getState().dialogsPage}/>
-//     )
-// }
+const DialogsContainer = (props:any) => {
+
+    let dialogsElements = props.dialogsPage.dialogs.map( (d:DialogType) => <DialogsItems name={d.name} id={d.id} />);
+
+    let messageElements = props.dialogsPage.messages.map( (m:MessageType) => <Messages id={m.id} message={m.message} />);
+
+    let newMessageBody = props.dialogsPage.newMessageBody;
+
+    let onSendMessageClick = () => {
+        props.dispatch(sendMessageCreator(""))
+    }
+
+    let onNewMessageChange =(body:any) => {
+        props.dispatch(updateNewMessageBodyCreator(body))
+    }
+
+    return (
+      <Dialogs updateNewMessageBody={onNewMessageChange} sendMessage={onSendMessageClick} dialogsPage={props.store.getState().dialogsPage}/>
+    )
+}
 
 let mapStateToProps = (state:AppStateType) => {
     return {

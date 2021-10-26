@@ -21,6 +21,8 @@ import Login from "./components/Login/Login";
      dispatch?:(action:AddPostActionType |ChangeNewTextActionType|AddMessageActionType| SendMessageActionType) => void
 }
 const App = () => {
+
+
     return (
         <BrowserRouter>
             <div className="app-wrapper">
@@ -28,11 +30,20 @@ const App = () => {
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Route path='/dialogs'
-                           render={ () => <DialogsContainer/> }/>
+                            render={
+                                // @ts-ignore
+                                () => <DialogsContainer/> }
+                    />
                     <Route  path='/profile/:userId?'
-                            render={ () => <ProfileContainer />} />
+                            render={
+                                // @ts-ignore
+                                () => <ProfileContainer />}
+                    />
                     <Route path='/users'
-                           render={ () => <UsersAPIComponent /> } />
+                            render={
+                                // @ts-ignore
+                                () => <UsersAPIComponent /> }
+                    />
                     <Route path='/login'
                            render={ () => <Login /> } />
                 </div>
