@@ -63,6 +63,10 @@ export type SetUserProfileActionType = {
     type: "UPDATE-NEW-POST-TEXT"
     newText: string
 }
+export type SetStatusActionType = {
+    type: "SET_STATUS"
+    status: string
+}
  export type AddMessageActionType = {
     type: "UPDATE-NEW-MESSAGE-BODY"
     body: string

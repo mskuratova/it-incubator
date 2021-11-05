@@ -9,7 +9,7 @@ const instance = axios.create({
 })
 
 export const userAPI = {
-    getUser(currentPage: number = 1, pageSize: number = 10) {
+    getUser(currentPage: number = 2, pageSize: number = 10) {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`,
         )
             .then(response => response.data);
@@ -28,7 +28,13 @@ export const userAPI = {
 export const profileAPI = {
     getProfile(userId: number): Promise<AxiosResponse<any>> {
         return instance.get(`profile/`+userId);
-    }
+    },
+    getStatus(userId:number): Promise<AxiosResponse<any>> {
+        return instance.put(`profile/status/`+userId);
+    },
+    updateStatus(status: string): Promise<AxiosResponse<any>> {
+        return instance.put(`profile/status/`, {status});
+    },
 }
 export const authAPI = {
     me () {

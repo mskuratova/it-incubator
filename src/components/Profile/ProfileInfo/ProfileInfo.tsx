@@ -5,12 +5,17 @@ import ProfileStatus from "./ProfileStatus";
 
 type PropsType = {
     profile: any
+    status: any
+    updateStatus :any
 }
 
 const ProfileInfo = (props: PropsType) => {
+
+
     if (!props.profile) {
         return <Preloader />
     }
+
     return (
         <div>
             <div>
@@ -19,7 +24,8 @@ const ProfileInfo = (props: PropsType) => {
             </div>
             <div className={classes.descriptionBlock}>
                 <img src={props.profile.photos.large}/>
-                <ProfileStatus status ={"Hi!"}/>
+                < // @ts-ignore
+                    ProfileStatus status ={props.status} updateStatus={props.updateStatus}/>
             </div>
         </div>
 )

@@ -19,16 +19,14 @@ type ProfileType = {
 
 }
 
-class Profile extends React.Component<any> {
-    render() {
-        //let myPostsElements = props.profilePage.posts.map((p) => <MyPosts posts={p.message}/>);
-        return (
-            <div className={classes.content}>
-                <ProfileInfo profile={this.props.profile}/>
-                <MyPostsContainer/>
-            </div>
-        )
-    }
+const Profile = (props: any) => {
+
+    return (
+        <div className={classes.content}>
+            <ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateStatus}/>
+            <MyPostsContainer/>
+        </div>
+    )
 }
 
 export default Profile;

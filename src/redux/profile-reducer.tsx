@@ -3,20 +3,21 @@ import {
     ChangeNewTextActionType,
     PostType,
     ProfilePageType,
-    SendMessageActionType,
+    SendMessageActionType, SetStatusActionType,
     SetUserProfileActionType
 } from "./store";
 import {Dispatch} from "redux";
-import {userAPI} from "../api/api";
+import {profileAPI, userAPI} from "../api/api";
 
-type ActionsType = ChangeNewTextActionType | AddPostActionType | SetUserProfileActionType
+type ActionsType = ChangeNewTextActionType | AddPostActionType | SetUserProfileActionType | SetStatusActionType
 
 let initialState = {
     posts: [
         {id: 1, message: 'Hi, how are you?', likesCount: 12},
         {id: 2, message: 'My posts?', likesCount: 11}],
     newPostText: "it-kamasutra",
-    profile: null
+    profile: null,
+    status: "Hi!"
 
 };
 export type InitialSateType = typeof initialState;
@@ -25,7 +26,7 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
     switch (action.type) {
         case 'ADD-POST' : {
             let newPost: PostType = {
-                id: 5,
+                id: 2,
                 message: state.newPostText,
                 likesCount: 0
             };
@@ -40,8 +41,15 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
                 newPostText: action.newText
             } as InitialSateType
         }
+        case 'SET_STATUS' : {
+            return {
+                ...state,
+                status: action.status
+            } as InitialSateType
+        }
         case "SET-USER-PROFILE": {
             return {
+                status: "",
                 ...state, profile: action.profile
             }
         }
@@ -51,25 +59,6 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
     }
 }
 
-// if (action.type ==='ADD-POST') {
-//
-//     let newPost: PostType = {
-//         id: 5,
-//         message: action.newPostText,
-//         likesCount: 0
-//     };
-//     let stateCopy = {...state}
-//     stateCopy.posts=[...state.posts]
-//     stateCopy.posts.push(newPost);
-//     stateCopy.newPostText ='';
-//     return stateCopy;
-// }
-// else if (action.type === 'UPDATE-NEW-POST-TEXT') {
-//     let stateCopy = {...state}
-//     stateCopy.newPostText = action.newText;
-//     return stateCopy
-// }
-// return state
 
 export const addPostActionCreator = (): AddPostActionType => {
     return {
@@ -80,12 +69,27 @@ export const addPostActionCreator = (): AddPostActionType => {
 export const updateNewPostTextActionCreator = (text: string): ChangeNewTextActionType => {
     return {type: "UPDATE-NEW-POST-TEXT", newText: text}
 }
+export const setStatusActionCreator = (status: string): SetStatusActionType => {
+    return {type: "SET_STATUS", status}
+}
 export const setUserProfile = (profile: any): SetUserProfileActionType => {
     return {type: "SET-USER-PROFILE", profile}
 }
 export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {
     userAPI.getProfile(userId).then(response => {
         dispatch(setUserProfile(response.data))
+    });
+}
+export const getStatus = (userId: number) => (dispatch: Dispatch) => {
+    profileAPI.getStatus(userId).then(response => {
+        dispatch(setStatusActionCreator(response.data))
+    });
+}
+export const updateStatus = (status: string) => (dispatch: Dispatch) => {
+    profileAPI.updateStatus(status).then(response => {
+        if (response.data.resultCode === 0)  {
+            dispatch(setStatusActionCreator(status))
+        }
     });
 }
 
