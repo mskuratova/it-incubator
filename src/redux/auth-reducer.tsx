@@ -10,11 +10,12 @@ import {Dispatch} from "redux";
 import {authAPI} from "../api/api";
 
 type InitialSateType = {
-    userId: string,
-    email: string,
-    login: string,
+    userId: string | null,
+    email: string | null,
+    login: string | null,
     isFetching: boolean
     isAuth:boolean
+
 }
 
 let initialState = {

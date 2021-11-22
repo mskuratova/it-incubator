@@ -3,7 +3,7 @@ import {
     ChangeNewTextActionType,
     PostType,
     ProfilePageType,
-    SendMessageActionType, SetStatusActionType,
+    SetStatusActionType,
     SetUserProfileActionType
 } from "./store";
 import {Dispatch} from "redux";
@@ -15,7 +15,7 @@ let initialState = {
     posts: [
         {id: 1, message: 'Hi, how are you?', likesCount: 12},
         {id: 2, message: 'My posts?', likesCount: 11}],
-    newPostText: "it-kamasutra",
+    // newPostText: "it-kamasutra",
     profile: null,
     status: "Hi!"
 
@@ -26,19 +26,14 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
     switch (action.type) {
         case 'ADD-POST' : {
             let newPost: PostType = {
-                id: 2,
-                message: state.newPostText,
+                id: 5,
+                message: action.newPostText,
                 likesCount: 0
             };
             return {
                 ...state,
-                posts: [...state.posts, newPost]
-            } as InitialSateType
-        }
-        case 'UPDATE-NEW-POST-TEXT' : {
-            return {
-                ...state,
-                newPostText: action.newText
+                // posts: [...state.posts, newPost],
+                // newPostText:''
             } as InitialSateType
         }
         case 'SET_STATUS' : {
@@ -60,15 +55,10 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
 }
 
 
-export const addPostActionCreator = (): AddPostActionType => {
-    return {
-        type: "ADD-POST"
-    }
+export const addPostActionCreator = (newPostText: string): AddPostActionType => {
+    return {type: "ADD-POST", newPostText}
 }
 
-export const updateNewPostTextActionCreator = (text: string): ChangeNewTextActionType => {
-    return {type: "UPDATE-NEW-POST-TEXT", newText: text}
-}
 export const setStatusActionCreator = (status: string): SetStatusActionType => {
     return {type: "SET_STATUS", status}
 }

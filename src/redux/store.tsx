@@ -19,13 +19,13 @@ export type PostType = {
 export type ProfilePageType = {
     store?:StoreType;
     posts: Array<PostType>
-    newPostText: string
+    newPostText?: string
     profile ?: any
 }
 export type DialogPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
-    newMessageBody:string
+    newMessageBody?:string
 }
 type sidebarType = {}
 export type RootStateType = {
@@ -48,6 +48,7 @@ export type StoreType = {
 
 export type AddPostActionType = {
     type: "ADD-POST"
+    newPostText:string
 }
 export type SetUserDataActionType = {
     type: 'SET-USER-DATA'

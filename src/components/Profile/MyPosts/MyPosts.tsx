@@ -1,8 +1,9 @@
 import React, {ChangeEvent} from 'react';
 import classes from './MyPosts.module.css';
 import Post from './Post/Post';
-import {AddPostActionType, ChangeNewTextActionType, PostType
+import { PostType
 } from '../../../redux/store';
+import {Field, reduxForm} from "redux-form";
 
 type MessageType = {
     posts: PostType[]
@@ -21,27 +22,15 @@ type ProfilePageType = {
 
     let postsElements = posts.map((p) => <Post likesCount={p.likesCount} message={p.message} id={p.id}/>);
 
-    let onAddPost:() => void = () => {
-       addPosts();
+    let onAddPost:(values:any) => void = (values:any) => {
+        // props.addPosts(values.newPostText);
     }
-
-    let onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let text = e.currentTarget.value;
-        updateNewPostsText(text)
-    }
-
     return (
         <div className={classes.postsBlock}>
             <div>
                 <h3>My post</h3>
             </div>
-            <div>
-                <div>
-                    <textarea onChange={onPostChange} value={newPostText}/>
-                    {/*ref={newPostElement}*/}
-                </div>
-                <button onClick={onAddPost}>Add post</button>
-            </div>
+           <AddNewPostForm onSubmit={onAddPost}/>
             <div className={classes.posts}>
                 {postsElements}
             </div>
@@ -49,4 +38,18 @@ type ProfilePageType = {
     )
 };
 
+function AddNewPostForm (props:any) {
+    return(
+        <form onSubmit={props.handleSubmit}>
+            <div>
+                <Field name={"newPostText"} component="textarea"/>
+            </div>
+            <button>Add post</button>
+        </form>
+    )
+}
+// @ts-ignore
+AddNewPostForm = reduxForm({form: "ProfileAddNewPostForm"})(AddNewPostForm)
+
 export default MyPosts
+

@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import classes from './Dialogs.module.css';
 import {
     AddMessageActionType,
@@ -7,13 +7,11 @@ import {
     DialogPageType, DialogType, MessageType,
     SendMessageActionType
 } from "../../redux/store";
-import {sendMessageCreator, updateNewMessageBodyCreator } from '../../redux/dialogs-reducer';
+import {sendMessageCreator} from '../../redux/dialogs-reducer';
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {compose, Dispatch} from "redux";
-import {Redirect} from "react-router-dom";
-import ProfileInfoContainer from "../Profile/ProfileInfo/ProfileInfoContainer";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import DialogsItems from "./DialigItem/DialogsItem";
 
@@ -31,8 +29,7 @@ type MessagePropsType = {
 const Messages = (props:MessagePropsType) => {
     return <div className={classes.dialogs}>{props.message}</div>
 }
-
-const DialogsContainer = (props:any) => {
+ const DialogsContainer = (props:any) => {
 
     let dialogsElements = props.dialogsPage.dialogs.map( (d:DialogType) => <DialogsItems name={d.name} id={d.id} />);
 
@@ -40,17 +37,19 @@ const DialogsContainer = (props:any) => {
 
     let newMessageBody = props.dialogsPage.newMessageBody;
 
+
     let onSendMessageClick = () => {
         props.dispatch(sendMessageCreator(""))
     }
 
     let onNewMessageChange =(body:any) => {
-        props.dispatch(updateNewMessageBodyCreator(body))
+        // props.dispatch(updateNewMessageBodyCreator(body))
     }
 
     return (
-      <Dialogs updateNewMessageBody={onNewMessageChange} sendMessage={onSendMessageClick} dialogsPage={props.store.getState().dialogsPage}/>
+      <Dialogs  sendMessage={onSendMessageClick} dialogsPage={props.dialogsPage} isAuth={props.isAuth}/>
     )
+
 }
 
 let mapStateToProps = (state:AppStateType) => {
@@ -61,22 +60,13 @@ let mapStateToProps = (state:AppStateType) => {
 }
 let mapDispatchToProps = (dispatch:Dispatch) => {
     return {
-        updateNewMessageBody: (body:string) => {
-            dispatch(updateNewMessageBodyCreator(body));
-        },
         sendMessage: (messageText:string) => {
             dispatch(sendMessageCreator(messageText));
         }
     }
 }
-// let AuthRedirectComponent =
-//     // withAuthRedirect(Dialogs)
-//     (props: any) => {
-//     if(!props.isAuth) return <Redirect to={"/login"}/>
-//     return <Dialogs {...props}/>
-// }
-export default compose (connect(mapStateToProps, mapDispatchToProps), withAuthRedirect) (Dialogs)
 
-// const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(DialogsContainer)
 //
-// export default DialogsContainer;
+// export default compose<React.ComponentType>(connect(mapStateToProps, mapDispatchToProps), withAuthRedirect)(DialogsContainer)
+
