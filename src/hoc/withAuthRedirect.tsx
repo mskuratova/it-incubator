@@ -15,9 +15,6 @@ export const withAuthRedirect = (Component: any) => {
         }
     }
 
-
-
-
     function mapStateToProps(state: AppStateType) {
         return {
             isAuth: state.auth.isAuth

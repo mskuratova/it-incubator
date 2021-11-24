@@ -1,10 +1,5 @@
 import {
-    AddPostActionType,
-    ChangeNewTextActionType,
-    PostType,
-    ProfilePageType,
-    SendMessageActionType, SetUserDataActionType,
-    SetUserProfileActionType
+     SetUserDataActionType
 } from "./store";
 import {Dispatch} from "redux";
 import {authAPI} from "../api/api";
@@ -35,7 +30,6 @@ const authReducer = (state: InitialSateType = initialState, action: any): Initia
             return {
                 ...state,
                 ...action.data,
-                isAuth: true
             } as InitialSateType
         }
 
@@ -45,10 +39,10 @@ const authReducer = (state: InitialSateType = initialState, action: any): Initia
 }
 
 
-export const SetUserDataActionCreator = (userId: number, email: string, login: string): SetUserDataActionType => {
+export const SetUserDataActionCreator = (userId: number | null, email: string | null, login: string | null, isAuth:boolean): SetUserDataActionType => {
     return {
         type: 'SET-USER-DATA',
-        data: {userId, email, login}
+        data: {userId, email, login, isAuth}
     }
 }
 export const getAuthUserData =() => (dispatch:Dispatch) => {
@@ -56,7 +50,25 @@ export const getAuthUserData =() => (dispatch:Dispatch) => {
         .then(response => {
             if (response.data.resultCode === 0){
                 let {id, login, email} = response.data.data;
-               dispatch(SetUserDataActionCreator(id,email,login));
+               dispatch(SetUserDataActionCreator(id,email,login, true));
+            }
+        })
+
+}
+export const login =(email: string, password: string, rememberMe: boolean) => (dispatch:Dispatch<any>) => {
+    authAPI.login(email,password, rememberMe)
+        .then(response => {
+            if (response.data.resultCode === 0){
+               dispatch(getAuthUserData())
+            }
+        })
+
+}
+export const logout =() => (dispatch:Dispatch) => {
+    authAPI.logout()
+        .then(response => {
+            if (response.data.resultCode === 0){
+               dispatch(SetUserDataActionCreator(null, null, null, true));
             }
         })
 

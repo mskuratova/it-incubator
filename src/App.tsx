@@ -23,7 +23,6 @@ import DialogsContainer from './components/Dialogs/DialogsContainer';
 }
 const App = () => {
 
-
     return (
         <BrowserRouter>
             <div className="app-wrapper">
@@ -36,13 +35,10 @@ const App = () => {
                     />
                     <Route  path='/profile/:userId?'
                             render={
-                                // @ts-ignore
                                 () => <ProfileContainer />}
                     />
                     <Route path='/users'
-                            render={
-                                // @ts-ignore
-                                () => <UsersAPIComponent /> }
+                            render={ () => <UsersAPIComponent /> }
                     />
                     <Route path='/login'
                            render={ () => <Login /> } />

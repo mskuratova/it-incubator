@@ -52,9 +52,10 @@ export type AddPostActionType = {
 }
 export type SetUserDataActionType = {
     type: 'SET-USER-DATA'
-    data: {userId:number,
-    email:string,
-    login:string}
+    data: {userId:number | null,
+    email:string | null,
+    login:string | null,
+    isAuth:boolean}
 }
 export type SetUserProfileActionType = {
     type: "SET-USER-PROFILE"

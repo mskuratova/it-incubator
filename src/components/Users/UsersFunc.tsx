@@ -11,7 +11,7 @@ export let UsersFunc = (props: any) => {
         pages.push(i)
     }
     return <div>
-        <div> 1 2 3 4 5</div>
+        <div> 1 2 3 4 5 6</div>
         <div>
             {pages.map(p => {
                 return <span className={true && s.SelectedPage}

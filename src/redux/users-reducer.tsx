@@ -143,7 +143,7 @@ export const follow =(userId:number) => {
     return (dispatch: Dispatch) => {
       dispatch (toggleIsFollowingProgress(true, userId))
         userAPI.follow(userId)
-            .then((response: { data: { resultCode: number; items: any; totalCount: any; }; }) => {
+            .then((response: { data: { resultCode: number; items: UserType; totalCount: number; }; }) => {
                 if (response.data.resultCode == 0) {
                     dispatch(followSuccess(userId));
                 }
@@ -154,7 +154,7 @@ export const unfollow =(userId:number) => {
     return (dispatch: Dispatch) => {
       dispatch (toggleIsFollowingProgress(true, userId))
         userAPI.unfollow(userId)
-            .then((response: { data: { resultCode: number; items: any; totalCount: any; }; }) => {
+            .then((response: { data: { resultCode: number; items: UserType; totalCount: number; }; }) => {
                 if (response.data.resultCode == 0) {
                     dispatch(unfollowSuccess(userId));
                 }
