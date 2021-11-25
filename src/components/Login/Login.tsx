@@ -5,14 +5,19 @@ import {connect} from "react-redux";
 import { login } from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
 import {AppStateType} from "../../redux/redux-store";
+import { useFormik } from 'formik';
 
 type FormDataType = {
     login: string
     password: string
     rememberMe: boolean
 }
+type PropsType = {
+    login: string |null |any
+    isAuth: boolean
+}
 
-const Login = (props: any) => {
+const Login = (props: PropsType) => {
     const onSubmit = (formData:FormDataType) => {
         props.login(formData.login, formData.password, formData.rememberMe);
     }
@@ -26,23 +31,63 @@ const Login = (props: any) => {
     </div>
 }
 
-const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props: any) => {
+const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+            rememberMe: false
+        },
+        onSubmit: values => {
+            alert(JSON.stringify(values, null, 2));
+        },
+    });
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={formik.handleSubmit}>
+            <label htmlFor="email">Email Address</label>
             <div>
-                <Field placeholder={"Login"} name={"login"} validate={[require]} component={Input}/>
+                <input
+                id="email"
+                type="email"
+                {...formik.getFieldProps("email")}
+            />
             </div>
             <div>
-                <Field placeholder={"Password"} name={"password"} type={"password"} validate={[require]} component={Input}/>
+            <input
+                id ="password"
+                type="password"
+                {...formik.getFieldProps("password")}
+            />
             </div>
             <div>
-                <Field type={"checkbox"} name={"rememberMe"}component={Input}/> remember me
+                <input type={"checkbox"}
+                       id = "rememberMe"
+                       {...formik.getFieldProps("rememberMe")}
+                />
             </div>
-            <div>
-                <button>Login</button>
-            </div>
+
+            <button type="submit">Submit</button>
         </form>
+//          <form onSubmit={props.handleSubmit}>
+//              <div>
+//                  <Field placeholder={"Login"} name={"login"}
+//                          validate={[require]}
+//                      component={Input}
+//                  />
+//              </div>
+//              <div>
+//                  <Field placeholder={"Password"} name={"password"} type={"password"}
+//                         // validate={[require]}
+//                         component={Input}/>
+//              </div>
+//              <div>
+//                  <Field type={"checkbox"} name={"rememberMe"}component={Input}/> remember me
+//             </div>
+//              <div>
+//                  <button>Login</button>
+//              </div>
+//          </form>
     )
 };
 

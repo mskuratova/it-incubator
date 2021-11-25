@@ -8,6 +8,13 @@ const instance = axios.create({
     }
 })
 
+export enum ResultCodesEnum {
+    Success,
+    Error,
+    CaptchaIsRequired = 10
+
+}
+
 export const userAPI = {
     getUser(currentPage: number = 2, pageSize: number = 10) {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`,
@@ -36,12 +43,24 @@ export const profileAPI = {
         return instance.put(`profile/status/`, {status});
     },
 }
+
+type MeResponseType ={
+    data: { id: number, email: string, login: string}
+    resultCode: ResultCodesEnum
+    messages: Array<string>
+}
+type LoginResponseType ={
+    data: { userId: number}
+    resultCode: ResultCodesEnum
+    messages: Array<string>
+}
 export const authAPI = {
     me () {
-        return instance.get(`auth/me`);
+        return instance.get<MeResponseType>(`auth/me`)
+            // .then(res=> res.data);
     },
     login (email:string, password: string, rememberMe: boolean= false) {
-        return instance.post(`auth/login`, {email, password, rememberMe});
+        return instance.post<LoginResponseType>(`auth/login`, {email, password, rememberMe});
     },
     logout () {
         return instance.delete(`auth/login`);
