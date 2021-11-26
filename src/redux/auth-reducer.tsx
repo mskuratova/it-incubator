@@ -3,6 +3,7 @@ import {
 } from "./store";
 import {Dispatch} from "redux";
 import {authAPI} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 type InitialSateType = {
     userId: string | null,
@@ -60,6 +61,10 @@ export const login =(email: string, password: string, rememberMe: boolean) => (d
         .then(response => {
             if (response.data.resultCode === 0){
                dispatch(getAuthUserData())
+            }
+            else  {
+                let action = stopSubmit("login", {email: "Email is wrong"});
+                dispatch(action)
             }
         })
 

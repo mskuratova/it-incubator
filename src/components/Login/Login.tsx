@@ -6,6 +6,7 @@ import { login } from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
 import {AppStateType} from "../../redux/redux-store";
 import { useFormik } from 'formik';
+import {authAPI} from "../../api/api";
 
 type FormDataType = {
     login: string
@@ -41,7 +42,10 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
         },
         onSubmit: values => {
             alert(JSON.stringify(values, null, 2));
+            // authAPI.login(values.email, values.password, values.rememberMe )
+
         },
+
     });
     return (
         <form onSubmit={formik.handleSubmit}>
