@@ -57,6 +57,9 @@ export type SetUserDataActionType = {
     login:string | null,
     isAuth:boolean}
 }
+export type SetInitializerActionType = {
+    type: 'SET-INITIALIZED'
+}
 export type SetUserProfileActionType = {
     type: "SET-USER-PROFILE"
     profile:any

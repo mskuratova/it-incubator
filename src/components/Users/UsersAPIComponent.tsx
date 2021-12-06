@@ -71,5 +71,4 @@ export default compose<ComponentType>(
         {
             follow, unfollow, setCurrentPage,
             toggleIsFollowingProgress, getUsers: getUsersThunkCreator
-        }),
-    withAuthRedirect)(UsersAPIComponent)
+        }))(UsersAPIComponent)
