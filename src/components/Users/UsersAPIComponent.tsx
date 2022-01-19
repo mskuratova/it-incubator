@@ -24,7 +24,7 @@ type PropsType = {
     currentPage: number
     pageSize: number
     toggleIsFetching: (isFetching: boolean) => void
-    totalUsersCount: number
+    totalUserCount: number
     users: Array<UserType>
     getUsers: (currentPage: number, pageSize: number) => void
     setCurrentPage: (pageNumber: number) => void
@@ -43,16 +43,17 @@ class UsersAPIComponent extends React.Component<PropsType> {
     onPageChanged = (pageNumber: number) => {
         this.props.getUsers(pageNumber, this.props.pageSize);
         this.props.setCurrentPage(pageNumber)
-        this.props.toggleIsFetching(true)
+        // this.props.toggleIsFetching(true)
         userAPI.getUser(pageNumber, this.props.pageSize).then(data => {
-            this.props.toggleIsFetching(false)
+            // this.props.toggleIsFetching(false)
             this.props.setUsers(data.items)
         });
     }
 
     render() {
-        return <UsersFunc totalUsersCount={this.props.totalUsersCount}
+        return <UsersFunc totalUserCount={this.props.totalUserCount}
                           pageSize={this.props.pageSize}
+                          // totalUserCount={this.props.totalUserCount}
                           currentPage={this.props.currentPage}
                           onPageChanged={this.onPageChanged}
                           users={this.props.users}
@@ -67,7 +68,7 @@ let mapStateToProps = (state: AppStateType) => {
     return {
         users: getUsers(state),
         pageSize: getPageSize(state),
-        totalUsersCount: getTotalUserCount(state),
+        totalUserCount: getTotalUserCount(state),
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
         followingInProgress: getFollowingInProgress(state),

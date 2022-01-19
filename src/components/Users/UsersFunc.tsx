@@ -2,6 +2,8 @@ import React from "react";
 import s from "./users.module.css";
 import userPhoto from "../../assets/images/loading-process-svgrepo-com.svg"
 import {NavLink} from "react-router-dom";
+import {userAPI} from "../../api/api";
+import {toggleIsFollowingProgress} from "../../redux/users-reducer";
 
 export let UsersFunc = (props: any) => {
 
@@ -10,11 +12,16 @@ export let UsersFunc = (props: any) => {
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
+    // console.log(pages)
+    // console.log(pagesCount)
+    // console.log(props.totalUserCount)
+    // console.log(props.pageSize)
     return <div>
-        <div> 1 2 3 4 5 6</div>
+        {/*<div> 1 2 3 4 5 6</div>*/}
         <div>
             {pages.map(p => {
-                return <span className={true && s.SelectedPage}
+                // let pp =() => {props.currentPage === p}
+                return <span className={ s.SelectedPage}
                              onClick={(e) => (props.onPageChanged(p))}>
             {p}</span>
             })}
@@ -31,33 +38,33 @@ export let UsersFunc = (props: any) => {
                 <NavLink to={'/profile/' + u.id}>
                     <img src={userPhoto} className={s.userPhoto}/>
                 </NavLink>
-            {/*</div>*/}
-            {/*/!*{props.users.photos.small != null ? props.users.photos.small :""}*!/*/}
-            {/*< div>*/}
+            </div>
+            {/*{props.users.photos.small != null ? props.users.photos.small :""}*/}
+            < div>
         {u.followed
             ? <button disabled={props.followingInProgress.some((id: React.Key | null | undefined) => id === u.id)}
                       onClick={() => {props.unfollow(u.id)
-                // toggleFollowingProgress(true, u.id)
-                // userAPI.unfollow(u.id)
-                //     .then((response: { data: { resultCode: number; items: any; totalCount: any; }; }) => {
-                //         if (response.data.resultCode == 0) {
-                //             props.unfollow(u.id)
-                //         }
-                //     });
-                // props.toggleFollowingProgress(false, u.id)
+                          toggleIsFollowingProgress(true, u.id)
+                userAPI.unfollow(u.id)
+                    .then((response: { data: { resultCode: number; items: any; totalCount: any; }; }) => {
+                        if (response.data.resultCode == 0) {
+                            props.unfollow(u.id)
+                        }
+                    });
+                props.toggleFollowingProgress(false, u.id)
             }}>
                 Unfollow </button>
             : <button disabled={props.followingInProgress.some((id: React.Key | null | undefined) => id === u.id)} onClick={() => {
                 props.follow(u.id)
-                // toggleFollowingProgress(true, u.id)
-                // userAPI.follow(u.id)
-                //     .then((response: { data: { resultCode: number; items: any; totalCount: any; }; }) => {
-                //         if (response.data.resultCode == 0) {
-                //             props.follow(u.id)
-                //         }
-                //     });
-                // props.toggleFollowingProgress(false)
-                // ;
+                toggleIsFollowingProgress(true, u.id)
+                userAPI.follow(u.id)
+                    .then((response: { data: { resultCode: number; items: any; totalCount: any; }; }) => {
+                        if (response.data.resultCode == 0) {
+                            props.follow(u.id)
+                        }
+                    });
+                props.toggleFollowingProgress(false)
+                ;
             }}>Follow </button>}
 
             </div>
