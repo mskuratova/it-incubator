@@ -21,7 +21,7 @@ type ProfilePageType = {
     // dispatch ?:(action:AddPostActionType | ChangeNewTextActionType) => void
 }
 
-const MyPosts: React.FC<ProfilePageType> = ({posts, newPostText, addPosts, updateNewPostsText}) => {
+const MyPosts: React.FC<ProfilePageType> = React.memo(({posts, newPostText, addPosts, updateNewPostsText}) => {
 
     let postsElements = posts.map((p) => <Post likesCount={p.likesCount} message={p.message} id={p.id}/>);
 
@@ -39,7 +39,7 @@ const MyPosts: React.FC<ProfilePageType> = ({posts, newPostText, addPosts, updat
             </div>
         </div>
     )
-};
+});
 
 type AddNewPostFormType = {
     onSubmit: (onAddPost: any) => void
