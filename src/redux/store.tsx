@@ -72,6 +72,10 @@ export type SetStatusActionType = {
     type: "SET_STATUS"
     status: string
 }
+export type DeletePostActionType = {
+    type: "DELETE-POST"
+    postId: number
+}
  export type AddMessageActionType = {
     type: "UPDATE-NEW-MESSAGE-BODY"
     body: string

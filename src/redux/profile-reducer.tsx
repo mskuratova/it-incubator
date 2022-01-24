@@ -1,6 +1,6 @@
 import {
     AddPostActionType,
-    ChangeNewTextActionType,
+    ChangeNewTextActionType, DeletePostActionType,
     PostType,
     ProfilePageType,
     SetStatusActionType,
@@ -9,7 +9,7 @@ import {
 import {Dispatch} from "redux";
 import {profileAPI, userAPI} from "../api/api";
 
-type ActionsType = ChangeNewTextActionType | AddPostActionType | SetUserProfileActionType | SetStatusActionType
+type ActionsType = ChangeNewTextActionType | AddPostActionType | SetUserProfileActionType | SetStatusActionType | DeletePostActionType
 
 let initialState = {
     posts: [
@@ -32,7 +32,7 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
             };
             return {
                 ...state,
-                // posts: [...state.posts, newPost],
+                posts: [...state.posts, newPost],
                 // newPostText:''
             } as InitialSateType
         }
@@ -47,6 +47,11 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
                 status: "",
                 ...state, profile: action.profile
             }
+        }
+        case "DELETE-POST":{
+            return {...state,
+                 posts: state.posts.filter(p => p.id != action.postId)
+            }as InitialSateType
         }
 
         default:
@@ -64,6 +69,9 @@ export const setStatusActionCreator = (status: string): SetStatusActionType => {
 }
 export const setUserProfile = (profile: any): SetUserProfileActionType => {
     return {type: "SET-USER-PROFILE", profile}
+}
+export const deletePost = (postId: number): DeletePostActionType => {
+    return {type: "DELETE-POST", postId}
 }
 export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {
     userAPI.getProfile(userId).then(response => {
