@@ -26,7 +26,7 @@ let initialState = {
 
 const authReducer = (state: InitialSateType = initialState, action: any): InitialSateType => {
     switch (action.type) {
-        case 'SET-USER-DATA' : {
+        case 'auth/SET-USER-DATA' : {
 
             return {
                 ...state,
@@ -42,40 +42,31 @@ const authReducer = (state: InitialSateType = initialState, action: any): Initia
 
 export const SetUserDataActionCreator = (userId: number | null, email: string | null, login: string | null, isAuth: boolean): SetUserDataActionType => {
     return {
-        type: 'SET-USER-DATA',
+        type: 'auth/SET-USER-DATA',
         data: {userId, email, login, isAuth}
     }
 }
-export const getAuthUserData = () => (dispatch: Dispatch):Promise<any> => {
-    return authAPI.me()
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                let {id, login, email} = response.data.data;
-                dispatch(SetUserDataActionCreator(id, email, login, true));
-            }
-        })
-
+export const getAuthUserData = () => async (dispatch: Dispatch): Promise<any> => {
+    let response = await authAPI.me();
+    if (response.data.resultCode === 0) {
+        let {id, login, email} = response.data.data;
+        dispatch(SetUserDataActionCreator(id, email, login, true));
+    }
 }
-export const login = (email: string, password: string, rememberMe: boolean) => (dispatch: Dispatch<any>) => {
-    authAPI.login(email, password, rememberMe)
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(getAuthUserData())
-            } else {
-                let action = stopSubmit("login", {email: "Email is wrong"});
-                dispatch(action)
-            }
-        })
-
+export const login = (email: string, password: string, rememberMe: boolean) => async (dispatch: Dispatch<any>) => {
+    let response = await authAPI.login(email, password, rememberMe);
+    if (response.data.resultCode === 0) {
+        dispatch(getAuthUserData())
+    } else {
+        let action = stopSubmit("login", {email: "Email is wrong"});
+        dispatch(action)
+    }
 }
-export const logout = () => (dispatch: Dispatch) => {
-    authAPI.logout()
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(SetUserDataActionCreator(null, null, null, true));
-            }
-        })
-
+export const logout = () => async (dispatch: Dispatch) => {
+    let response = await authAPI.logout();
+    if (response.data.resultCode === 0) {
+        dispatch(SetUserDataActionCreator(null, null, null, false));
+    }
 }
 
 export default authReducer;

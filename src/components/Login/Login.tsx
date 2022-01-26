@@ -1,6 +1,5 @@
 import React from "react";
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import { Input } from "../common/FormControls/FormsControls";
+import {InjectedFormProps, reduxForm} from "redux-form";
 import {connect} from "react-redux";
 import { login } from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
@@ -42,7 +41,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
         },
         onSubmit: values => {
             alert(JSON.stringify(values, null, 2));
-            // authAPI.login(values.email, values.password, values.rememberMe )
+            authAPI.login(values.email, values.password, values.rememberMe )
 
         },
 
@@ -73,25 +72,6 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
             <button type="submit">Submit</button>
         </form>
-//          <form onSubmit={props.handleSubmit}>
-//              <div>
-//                  <Field placeholder={"Login"} name={"login"}
-//                          validate={[require]}
-//                      component={Input}
-//                  />
-//              </div>
-//              <div>
-//                  <Field placeholder={"Password"} name={"password"} type={"password"}
-//                         // validate={[require]}
-//                         component={Input}/>
-//              </div>
-//              <div>
-//                  <Field type={"checkbox"} name={"rememberMe"}component={Input}/> remember me
-//             </div>
-//              <div>
-//                  <button>Login</button>
-//              </div>
-//          </form>
     )
 };
 

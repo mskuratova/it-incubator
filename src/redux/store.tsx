@@ -51,7 +51,7 @@ export type AddPostActionType = {
     newPostText:string
 }
 export type SetUserDataActionType = {
-    type: 'SET-USER-DATA'
+    type: 'auth/SET-USER-DATA'
     data: {userId:number | null,
     email:string | null,
     login:string | null,

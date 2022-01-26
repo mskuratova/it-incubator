@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import {
     AddMessageActionType,
     AddPostActionType,
@@ -36,7 +36,6 @@ class App extends Component<any, AppPropsType> {
         //     return <Preloader/>
         // }
         return (
-            <BrowserRouter>
                 <div className="app-wrapper">
                     <HeaderContainer/>
                     <Navbar/>
@@ -56,7 +55,6 @@ class App extends Component<any, AppPropsType> {
                                render={() => <Login/>}/>
                     </div>
                 </div>
-            </BrowserRouter>
         );
     }
 }

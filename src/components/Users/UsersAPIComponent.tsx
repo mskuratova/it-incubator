@@ -3,7 +3,7 @@ import {UsersFunc} from "./UsersFunc";
 import {connect} from "react-redux";
 import {
     follow,
-    getUsersThunkCreator,
+    requestUsersThunkCreator,
     setCurrentPage,
     toggleIsFollowingProgress,
     unfollow, UserType
@@ -29,9 +29,9 @@ type PropsType = {
     getUsers: (currentPage: number, pageSize: number) => void
     setCurrentPage: (pageNumber: number) => void
     setUsers: (items: UserType) => void
-    followingInProgress: Array<number>
-    unfollow: () => void
-    follow: () => void
+    followingInProgress: number[]
+    unfollow: (id:number) => void
+    follow: (id: number) => void
 
 }
 
@@ -53,14 +53,13 @@ class UsersAPIComponent extends React.Component<PropsType> {
     render() {
         return <UsersFunc totalUserCount={this.props.totalUserCount}
                           pageSize={this.props.pageSize}
-                          // totalUserCount={this.props.totalUserCount}
                           currentPage={this.props.currentPage}
                           onPageChanged={this.onPageChanged}
                           users={this.props.users}
                           follow={this.props.follow}
                           unfollow={this.props.unfollow}
                           followingInProgress={this.props.followingInProgress}
-        />
+                          getUsers={this.props.getUsers}/>
     }
 }
 
@@ -78,5 +77,5 @@ export default compose<ComponentType>(
     connect(mapStateToProps,
         {
             follow, unfollow, setCurrentPage,
-            toggleIsFollowingProgress, getUsers: getUsersThunkCreator
+            toggleIsFollowingProgress, getUsers: requestUsersThunkCreator
         }))(UsersAPIComponent)
