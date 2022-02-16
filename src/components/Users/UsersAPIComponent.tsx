@@ -64,6 +64,7 @@ class UsersAPIComponent extends React.Component<PropsType> {
 }
 
 let mapStateToProps = (state: AppStateType) => {
+
     return {
         users: getUsers(state),
         pageSize: getPageSize(state),
@@ -74,6 +75,7 @@ let mapStateToProps = (state: AppStateType) => {
     }
 }
 export default compose<ComponentType>(
+
     connect(mapStateToProps,
         {
             follow, unfollow, setCurrentPage,
