@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import {Route} from 'react-router-dom';
+import {BrowserRouter, Route} from 'react-router-dom';
 import {
     AddMessageActionType,
     AddPostActionType,
@@ -13,10 +13,11 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 import UsersAPIComponent from "./components/Users/UsersAPIComponent";
 import Login from "./components/Login/Login";
 import DialogsContainer from './components/Dialogs/DialogsContainer';
-import {connect} from "react-redux";
+import {connect, Provider} from "react-redux";
 import {initializeApp, InitialSateType} from "./redux/app-reducer";
 import {Preloader} from "./components/common/Preloader/Preloader";
 import {getAuthUserData} from "./redux/auth-reducer";
+import store from "./redux/redux-store";
 
 export type AppPropsType = {
     store: StoreType;
@@ -69,4 +70,13 @@ const mapStateToProps = (state: StateType) => ({
 })
 
 
-export default connect(mapStateToProps, {getAuthUserData})(App);
+// export default connect(mapStateToProps, {getAuthUserData})(App);
+let AppContainer = connect(mapStateToProps, {getAuthUserData})(App);
+
+export let SamuraiJSApp = (props:any) => {
+    return <BrowserRouter>
+        <Provider store={store} >
+            <AppContainer />
+        </Provider>
+    </BrowserRouter>
+}
