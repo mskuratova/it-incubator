@@ -4,7 +4,7 @@ import {UserType} from "../../redux/users-reducer";
 import Paginator from "../common/Paginator/Paginator";
 
 type PropsType ={
-    totalUserCount:number
+    totalItemsCount:number
     pageSize:number
     currentPage:number
     onPageChanged:(pageNumber: number) => void
@@ -24,7 +24,7 @@ export let UsersFunc = (props: PropsType) => {
 
         <Paginator currentPage={props.currentPage}
                    onPageChaged={props.onPageChanged}
-                   totalUserCount={props.totalUserCount} pageSize={props.pageSize}/>
+                   totalItemsCount={props.totalItemsCount} pageSize={props.pageSize}/>
         {props.users.map((u) => {
 
             return <User user={u}
