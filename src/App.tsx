@@ -9,10 +9,12 @@ import {
     RootStateType, SendMessageActionType, StoreType
 } from "./redux/store";
 import ProfileContainer from "./components/Profile/ProfileInfo/ProfileInfoContainer";
+//const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileInfo/ProfileInfoContainer"));
 import HeaderContainer from "./components/Header/HeaderContainer";
 import UsersAPIComponent from "./components/Users/UsersAPIComponent";
 import Login from "./components/Login/Login";
 import DialogsContainer from './components/Dialogs/DialogsContainer';
+//const DialogsContainer = React.lazy(() => import( "./components/Dialogs/DialogsContainer"));
 import {connect, Provider} from "react-redux";
 import {initializeApp, InitialSateType} from "./redux/app-reducer";
 import {Preloader} from "./components/common/Preloader/Preloader";
