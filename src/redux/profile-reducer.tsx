@@ -2,22 +2,25 @@ import {
     AddPostActionType,
     ChangeNewTextActionType, DeletePostActionType,
     PostType,
-    ProfilePageType,
+    ProfilePageType, SavePhotoActionType,
     SetStatusActionType,
     SetUserProfileActionType
 } from "./store";
 import {Dispatch} from "redux";
 import {profileAPI, userAPI} from "../api/api";
+import any = jasmine.any;
 
-type ActionsType = ChangeNewTextActionType | AddPostActionType | SetUserProfileActionType | SetStatusActionType | DeletePostActionType
+type ActionsType = ChangeNewTextActionType | AddPostActionType | SetUserProfileActionType | SetStatusActionType | DeletePostActionType | SavePhotoActionType
 
 let initialState = {
     posts: [
         {id: 1, message: 'Hi, how are you?', likesCount: 12},
         {id: 2, message: 'My posts?', likesCount: 11}],
     // newPostText: "it-kamasutra",
-    profile: null,
-    status: "Hi!"
+    profile: {
+        photos: any
+    },
+    // status: "Hi!"
 
 };
 export type InitialSateType = typeof initialState;
@@ -44,7 +47,7 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
         }
         case "SET-USER-PROFILE": {
             return {
-                status: "",
+                // status: "",
                 ...state, profile: action.profile
             }
         }
@@ -53,7 +56,10 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
                  posts: state.posts.filter(p => p.id != action.postId)
             }as InitialSateType
         }
-
+        case "SAVE-PHOTO-SUCCESS":{
+            return {...state,
+                profile: {...state.profile, photos: action.photos}}
+        }
         default:
             return state as InitialSateType;
     }
@@ -73,6 +79,9 @@ export const setUserProfile = (profile: any): SetUserProfileActionType => {
 export const deletePost = (postId: number): DeletePostActionType => {
     return {type: "DELETE-POST", postId}
 }
+export const savePhotoSuccess = (photos: any): SavePhotoActionType => {
+    return {type: "SAVE-PHOTO-SUCCESS", photos}
+}
 export const getUserProfile = (userId: number) => async (dispatch: Dispatch) => {
     let response = await userAPI.getProfile(userId);
         dispatch(setUserProfile(response.data));
@@ -86,6 +95,12 @@ export const updateStatus = (status: string) => async (dispatch: Dispatch) => {
         if (response.data.resultCode === 0)  {
             dispatch(setStatusActionCreator(status))
         }
+}
+export const savePhoto = (file: any) => async (dispatch: Dispatch) => {
+    let response = await profileAPI.savePhoto(file)
+    if (response.data.resultCode === 0)  {
+        dispatch(savePhotoSuccess(response.data.photos))
+    }
 }
 
 export default profileReducer;

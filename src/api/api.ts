@@ -42,6 +42,9 @@ export const profileAPI = {
     updateStatus(status: string): Promise<AxiosResponse<any>> {
         return instance.put(`profile/status/`, {status});
     },
+    savePhoto(file:any):any {
+
+    }
 }
 
 type MeResponseType ={

@@ -76,6 +76,10 @@ export type DeletePostActionType = {
     type: "DELETE-POST"
     postId: number
 }
+export type SavePhotoActionType = {
+    type: "SAVE-PHOTO-SUCCESS"
+    photos: any
+}
  export type AddMessageActionType = {
     type: "UPDATE-NEW-MESSAGE-BODY"
     body: string
