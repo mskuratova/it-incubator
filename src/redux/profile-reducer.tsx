@@ -99,7 +99,7 @@ export const updateStatus = (status: string) => async (dispatch: Dispatch) => {
 export const savePhoto = (file: any) => async (dispatch: Dispatch) => {
     let response = await profileAPI.savePhoto(file)
     if (response.data.resultCode === 0)  {
-        dispatch(savePhotoSuccess(response.data.photos))
+        dispatch(savePhotoSuccess(response.data.data.photos))
     }
 }
 
